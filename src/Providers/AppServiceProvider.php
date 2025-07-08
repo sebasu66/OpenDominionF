@@ -5,6 +5,7 @@ namespace OpenDominion\Providers;
 use Bugsnag;
 use Cache;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\URL;
 use OpenDominion\Calculators\Dominion\Actions\BankingCalculator;
 use OpenDominion\Calculators\Dominion\Actions\ConstructionCalculator;
 use OpenDominion\Calculators\Dominion\Actions\ExplorationCalculator;
@@ -86,6 +87,12 @@ class AppServiceProvider extends AbstractServiceProvider
     {
         Paginator::useBootstrapThree();
         Schema::defaultStringLength(191);
+
+        // Forzar la URL base para entornos como Codespaces
+        URL::forceRootUrl(config('app.url'));
+        if (str_starts_with(config('app.url'), 'https://')) {
+            URL::forceScheme('https');
+        }
 
         // Set Bugsnag app version
         if (($appVersion = Cache::get('version')) !== null) {

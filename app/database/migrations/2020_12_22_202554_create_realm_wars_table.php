@@ -16,19 +16,19 @@ class CreateRealmWarsTable extends Migration
      */
     public function up()
     {
-        // Schema::create('realm_wars', function (Blueprint $table) {
-        //     $table->increments('id');
-        //     $table->integer('source_realm_id')->unsigned();
-        //     $table->string('source_realm_name')->nullable();
-        //     $table->integer('target_realm_id')->unsigned();
-        //     $table->string('target_realm_name')->nullable();
-        //     $table->timestamp('active_at')->nullable();
-        //     $table->timestamp('inactive_at')->nullable();
-        //     $table->timestamps();
-        //
-        //     $table->foreign('source_realm_id')->references('id')->on('realms');
-        //     $table->foreign('target_realm_id')->references('id')->on('realms');
-        // });
+        Schema::create('realm_wars', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('source_realm_id')->unsigned();
+            $table->string('source_realm_name')->nullable();
+            $table->integer('target_realm_id')->unsigned();
+            $table->string('target_realm_name')->nullable();
+            $table->timestamp('active_at')->nullable();
+            $table->timestamp('inactive_at')->nullable();
+            $table->timestamps();
+
+            $table->foreign('source_realm_id')->references('id')->on('realms');
+            $table->foreign('target_realm_id')->references('id')->on('realms');
+        });
 
         foreach (Realm::all() as $realm) {
             if ($realm->war_realm_id !== null) {

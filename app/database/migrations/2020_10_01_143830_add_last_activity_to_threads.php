@@ -13,45 +13,43 @@ class AddLastActivityToThreads extends Migration
      */
     public function up()
     {
-        // La columna ya existe en council_threads, así que no la agregamos de nuevo
-        // Schema::table('council_threads', function (Blueprint $table) {
-        //     $table->dateTime('last_activity')->nullable()->after('body');
-        // });
-
-        // Set last activity to created date
+        // council_threads
+        Schema::table('council_threads', function (Blueprint $table) {
+            if (!Schema::hasColumn('council_threads', 'last_activity')) {
+                $table->dateTime('last_activity')->nullable()->after('body');
+            }
+        });
         DB::table('council_threads')
             ->update(['last_activity' => DB::raw('CAST(created_at AS datetime)')]);
 
-        // El siguiente bloque no es compatible con SQLite, así que lo comentamos
         /*
         // Get latest posts
-        $subquery = DB::table('council_posts')
-            ->select(DB::raw('council_thread_id, MAX(created_at) AS post_created_at'))
-            ->groupBy('council_thread_id');
-
+        // $subquery = DB::table('council_posts')
+        //     ->select(DB::raw('council_thread_id, MAX(created_at) AS post_created_at'))
+        //     ->groupBy('council_thread_id');
         // Set last activity to latest post created date
-        DB::table('council_threads')
-            ->joinSub($subquery, 'latest_posts', function ($join) {
-                $join->on('council_threads.id', '=', 'latest_posts.council_thread_id');
-            })->update([
-                'council_threads.last_activity' => DB::raw('CAST(latest_posts.post_created_at AS datetime)')
-            ]);
+        // DB::table('council_threads')
+        //     ->joinSub($subquery, 'latest_posts', function ($join) {
+        //         $join->on('council_threads.id', '=', 'latest_posts.council_thread_id');
+        //     })->update([
+        //         'council_threads.last_activity' => DB::raw('CAST(latest_posts.post_created_at AS datetime)')
+        //     ]);
         */
 
-        // La columna ya existe en forum_threads, así que no la agregamos de nuevo
-        // Schema::table('forum_threads', function (Blueprint $table) {
-        //     $table->dateTime('last_activity')->nullable()->after('body');
-        // });
-
-        // Set last activity to created date
+        // forum_threads
+        Schema::table('forum_threads', function (Blueprint $table) {
+            if (!Schema::hasColumn('forum_threads', 'last_activity')) {
+                $table->dateTime('last_activity')->nullable()->after('body');
+            }
+        });
         DB::table('forum_threads')
             ->update(['last_activity' => DB::raw('CAST(created_at AS datetime)')]);
 
+        /*
         // Get latest posts
         // $subquery = DB::table('forum_posts')
         //     ->select(DB::raw('forum_thread_id, MAX(created_at) AS post_created_at'))
         //     ->groupBy('forum_thread_id');
-
         // Set last activity to latest post created date
         // DB::table('forum_threads')
         //     ->joinSub($subquery, 'latest_posts', function ($join) {
@@ -59,21 +57,22 @@ class AddLastActivityToThreads extends Migration
         //     })->update([
         //         'forum_threads.last_activity' => DB::raw('CAST(latest_posts.post_created_at AS datetime)')
         //     ]);
+        */
 
-        // La columna ya existe en message_board_threads, así que no la agregamos de nuevo
-        // Schema::table('message_board_threads', function (Blueprint $table) {
-        //     $table->dateTime('last_activity')->nullable()->after('body');
-        // });
-
-        // Set last activity to created date
+        // message_board_threads
+        Schema::table('message_board_threads', function (Blueprint $table) {
+            if (!Schema::hasColumn('message_board_threads', 'last_activity')) {
+                $table->dateTime('last_activity')->nullable()->after('body');
+            }
+        });
         DB::table('message_board_threads')
             ->update(['last_activity' => DB::raw('CAST(created_at AS datetime)')]);
 
+        /*
         // Get latest posts
         // $subquery = DB::table('message_board_posts')
         //     ->select(DB::raw('message_board_thread_id, MAX(created_at) AS post_created_at'))
         //     ->groupBy('message_board_thread_id');
-
         // Set last activity to latest post created date
         // DB::table('message_board_threads')
         //     ->joinSub($subquery, 'latest_posts', function ($join) {
@@ -81,6 +80,7 @@ class AddLastActivityToThreads extends Migration
         //     })->update([
         //         'message_board_threads.last_activity' => DB::raw('CAST(latest_posts.post_created_at AS datetime)')
         //     ]);
+        */
     }
 
     /**
