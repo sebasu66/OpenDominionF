@@ -8,6 +8,13 @@ $router->get('/')->uses('HomeController@getIndex')->name('home');
 $router->get('user-agreement')->uses('HomeController@getUserAgreement')->name('user-agreement');
 $router->get('about')->uses('HomeController@getAboutPage')->name('about');
 
+$router->get('lang/{locale}', static function ($locale) {
+    if (in_array($locale, ['en', 'es'])) {
+        session(['locale' => $locale]);
+    }
+    return redirect()->back();
+})->name('lang.switch');
+
 // Authentication
 
 $router->group(['prefix' => 'auth', 'as' => 'auth.'], static function (Router $router) {
