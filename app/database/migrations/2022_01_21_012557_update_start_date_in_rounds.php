@@ -13,8 +13,9 @@ class UpdateStartDateInRounds extends Migration
      */
     public function up()
     {
+        // Adaptado para SQLite: sumar 72 horas a start_date
         DB::table('rounds')->update([
-            'start_date' => DB::raw('`start_date` + INTERVAL 72 HOUR'),
+            'start_date' => DB::raw("datetime(start_date, '+72 hours')"),
         ]);
     }
 
@@ -25,8 +26,9 @@ class UpdateStartDateInRounds extends Migration
      */
     public function down()
     {
+        // Adaptado para SQLite: restar 72 horas a start_date
         DB::table('rounds')->update([
-            'start_date' => DB::raw('`start_date` - INTERVAL 72 HOUR'),
+            'start_date' => DB::raw("datetime(start_date, '-72 hours')"),
         ]);
     }
 }
