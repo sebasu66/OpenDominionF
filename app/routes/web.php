@@ -80,6 +80,12 @@ $router->group(['middleware' => 'auth'], static function (Router $router) {
     $router->get('message-board/post/{post}/delete')->uses('MessageBoardController@getDeletePost')->name('message-board.delete.post');
     $router->post('message-board/post/{post}/delete')->uses('MessageBoardController@postDeletePost');
     $router->get('message-board/post/{post}/flag')->uses('MessageBoardController@getFlagPost')->name('message-board.flag.post');
+
+    // Narrative Chat
+    $router->get('narrative/chat')->uses('NarrativeController@getChat')->name('narrative.chat');
+    $router->get('narrative/messages')->uses('NarrativeController@getMessages')->name('narrative.messages');
+    $router->get('narrative/state')->uses('NarrativeController@getState')->name('narrative.state');
+    $router->post('narrative/message')->uses('NarrativeController@postMessage')->name('narrative.message');
     $router->get('message-board/{category}')->uses('MessageBoardController@getCategory')->name('message-board.category');
 
     $router->group(['prefix' => 'dominion', 'as' => 'dominion.'], static function (Router $router) {
