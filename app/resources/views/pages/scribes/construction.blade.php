@@ -4,15 +4,15 @@
     @include('partials.scribes.nav')
     <div class="box box-primary">
         <div class="box-header with-border">
-            <h3 class="box-title">Construction</h3>
+            <h3 class="box-title">{{ __('scribes.construction.title') }}</h3>
         </div>
         <div class="box-body">
             <div class="row">
                 <div class="col-md-12">
-                    <p>Buildings are the backbone of your dominion and provide you with production and various bonuses.</p>
-                    <p>They can only be constructed on acres of barren land.</p>
+                    <p>{{ __('scribes.construction.p1') }}</p>
+                    <p>{{ __('scribes.construction.p2') }}</p>
                     <em>
-                        <p>More information can be found on the <a href="https://wiki.opendominion.net/wiki/Buildings">wiki</a>.</p>
+                        <p>{!! __('scribes.construction.more_info') !!}</p>
                     </em>
                 </div>
             </div>
