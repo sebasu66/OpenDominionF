@@ -13,11 +13,7 @@ class RemoveTradeFromHeroesTable extends Migration
      */
     public function up()
     {
-        // Adaptado para SQLite: copiar el valor de la columna trade a class usando PHP
-        $heroes = DB::table('heroes')->get();
-        foreach ($heroes as $hero) {
-            DB::table('heroes')->where('id', $hero->id)->update(['class' => $hero->trade]);
-        }
+        DB::table('heroes')->update(['class' => DB::raw('trade')]);
 
         Schema::table('heroes', function (Blueprint $table) {
             $table->dropColumn('trade');
@@ -35,11 +31,7 @@ class RemoveTradeFromHeroesTable extends Migration
             $table->string('trade')->after('class')->nullable();
         });
 
-        // Adaptado para SQLite: copiar el valor de la columna class a trade usando PHP
-        $heroes = DB::table('heroes')->get();
-        foreach ($heroes as $hero) {
-            DB::table('heroes')->where('id', $hero->id)->update(['trade' => $hero->class]);
-        }
+        DB::table('heroes')->update(['trade' => DB::raw('class')]);
         DB::table('heroes')->update(['class' => 'warrior']);
     }
 }

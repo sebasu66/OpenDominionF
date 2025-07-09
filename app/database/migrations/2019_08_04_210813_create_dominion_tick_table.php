@@ -19,6 +19,9 @@ class CreateDominionTickTable extends Migration
             $table->integer('prestige')->default(0);
             $table->integer('peasants')->default(0);
             $table->integer('morale')->default(0);
+            $table->integer('resilience')->default(0);
+            $table->integer('fireball_meter')->default(0);
+            $table->integer('lightning_bolt_meter')->default(0);
             $table->float('spy_strength')->default(0);
             $table->float('wizard_strength')->default(0);
             $table->integer('resource_platinum')->default(0);

@@ -1,7 +1,7 @@
 {
   "type": "project",
   "require": {
-    "php": ">=7.4 <8.4",
+    "php": "^7.4 || ^8.0",
     "ext-bcmath": "*",
     "ext-curl": "*",
     "ext-fileinfo": "*",
@@ -10,6 +10,7 @@
     "ext-openssl": "*",
     "ext-pdo_mysql": "*",
     "atrox/haikunator": "^1.3",
+    
     "bugsnag/bugsnag-laravel": "~2.0",
     "doctrine/dbal": "~3.1",
     "facade/ignition": "^2.17.6",

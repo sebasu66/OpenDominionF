@@ -228,89 +228,89 @@ class TickService
         DB::transaction(function () use ($where) {
             // Update dominions
             DB::table('dominions')
+                ->join('dominion_tick', 'dominions.id', '=', 'dominion_tick.dominion_id')
                 ->where($where)
                 ->where(function ($query) {
                     $query->where('abandoned_at', null)->orWhere('abandoned_at', '>', $this->now);
                 })
                 ->update([
-                    'dominions.prestige' => DB::raw('(prestige + (SELECT prestige FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.peasants' => DB::raw('(peasants + (SELECT peasants FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.peasants_last_hour' => DB::raw('(SELECT peasants FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id)'),
-                    'dominions.morale' => DB::raw('(morale + (SELECT morale FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.spy_strength' => DB::raw('(spy_strength + (SELECT spy_strength FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.wizard_strength' => DB::raw('(wizard_strength + (SELECT wizard_strength FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.resilience' => DB::raw('(resilience + (SELECT resilience FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.fireball_meter' => DB::raw('(fireball_meter + (SELECT fireball_meter FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.lightning_bolt_meter' => DB::raw('(lightning_bolt_meter + (SELECT lightning_bolt_meter FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.resource_platinum' => DB::raw('(resource_platinum + (SELECT resource_platinum FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.resource_food' => DB::raw('(resource_food + (SELECT resource_food FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.resource_lumber' => DB::raw('(resource_lumber + (SELECT resource_lumber FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.resource_mana' => DB::raw('(resource_mana + (SELECT resource_mana FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.resource_ore' => DB::raw('(resource_ore + (SELECT resource_ore FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.resource_gems' => DB::raw('(resource_gems + (SELECT resource_gems FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.resource_tech' => DB::raw('(resource_tech + (SELECT resource_tech FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.resource_boats' => DB::raw('(resource_boats + (SELECT resource_boats FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.improvement_science' => DB::raw('(improvement_science + (SELECT improvement_science FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.improvement_keep' => DB::raw('(improvement_keep + (SELECT improvement_keep FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.improvement_forges' => DB::raw('(improvement_forges + (SELECT improvement_forges FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.improvement_walls' => DB::raw('(improvement_walls + (SELECT improvement_walls FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.military_draftees' => DB::raw('(military_draftees + (SELECT military_draftees FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.military_unit1' => DB::raw('(military_unit1 + (SELECT military_unit1 FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.military_unit2' => DB::raw('(military_unit2 + (SELECT military_unit2 FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.military_unit3' => DB::raw('(military_unit3 + (SELECT military_unit3 FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.military_unit4' => DB::raw('(military_unit4 + (SELECT military_unit4 FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.military_spies' => DB::raw('(military_spies + (SELECT military_spies FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.military_assassins' => DB::raw('(military_assassins + (SELECT military_assassins FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.military_wizards' => DB::raw('(military_wizards + (SELECT military_wizards FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.military_archmages' => DB::raw('(military_archmages + (SELECT military_archmages FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.land_plain' => DB::raw('(land_plain + (SELECT land_plain FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.land_mountain' => DB::raw('(land_mountain + (SELECT land_mountain FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.land_swamp' => DB::raw('(land_swamp + (SELECT land_swamp FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.land_cavern' => DB::raw('(land_cavern + (SELECT land_cavern FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.land_forest' => DB::raw('(land_forest + (SELECT land_forest FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.land_hill' => DB::raw('(land_hill + (SELECT land_hill FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.land_water' => DB::raw('(land_water + (SELECT land_water FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.discounted_land' => DB::raw('(discounted_land + (SELECT discounted_land FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.building_home' => DB::raw('(building_home + (SELECT building_home FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.building_alchemy' => DB::raw('(building_alchemy + (SELECT building_alchemy FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.building_farm' => DB::raw('(building_farm + (SELECT building_farm FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.building_smithy' => DB::raw('(building_smithy + (SELECT building_smithy FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.building_masonry' => DB::raw('(building_masonry + (SELECT building_masonry FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.building_ore_mine' => DB::raw('(building_ore_mine + (SELECT building_ore_mine FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.building_gryphon_nest' => DB::raw('(building_gryphon_nest + (SELECT building_gryphon_nest FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.building_tower' => DB::raw('(building_tower + (SELECT building_tower FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.building_wizard_guild' => DB::raw('(building_wizard_guild + (SELECT building_wizard_guild FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.building_temple' => DB::raw('(building_temple + (SELECT building_temple FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.building_diamond_mine' => DB::raw('(building_diamond_mine + (SELECT building_diamond_mine FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.building_school' => DB::raw('(building_school + (SELECT building_school FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.building_lumberyard' => DB::raw('(building_lumberyard + (SELECT building_lumberyard FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.building_forest_haven' => DB::raw('(building_forest_haven + (SELECT building_forest_haven FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.building_factory' => DB::raw('(building_factory + (SELECT building_factory FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.building_guard_tower' => DB::raw('(building_guard_tower + (SELECT building_guard_tower FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.building_shrine' => DB::raw('(building_shrine + (SELECT building_shrine FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.building_barracks' => DB::raw('(building_barracks + (SELECT building_barracks FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.building_dock' => DB::raw('(building_dock + (SELECT building_dock FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.stat_total_platinum_production' => DB::raw('(stat_total_platinum_production + (SELECT resource_platinum FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.stat_total_food_production' => DB::raw('(stat_total_food_production + (SELECT resource_food_production FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.stat_total_lumber_production' => DB::raw('(stat_total_lumber_production + (SELECT resource_lumber_production FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.stat_total_mana_production' => DB::raw('(stat_total_mana_production + (SELECT resource_mana_production FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.stat_total_ore_production' => DB::raw('(stat_total_ore_production + (SELECT resource_ore FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.stat_total_gem_production' => DB::raw('(stat_total_gem_production + (SELECT resource_gems FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.stat_total_tech_production' => DB::raw('(stat_total_tech_production + (SELECT resource_tech FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.stat_total_boat_production' => DB::raw('(stat_total_boat_production + (SELECT resource_boat_production FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.stat_total_food_decay' => DB::raw('(stat_total_food_decay + (SELECT resource_food_decay FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.stat_total_lumber_decay' => DB::raw('(stat_total_lumber_decay + (SELECT resource_lumber_decay FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.stat_total_mana_decay' => DB::raw('(stat_total_mana_decay + (SELECT resource_mana_decay FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.highest_land_achieved' => DB::raw('(highest_land_achieved + (SELECT highest_land_achieved FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id))'),
-                    'dominions.calculated_networth' => DB::raw('(SELECT calculated_networth FROM dominion_tick WHERE dominion_tick.dominion_id = dominions.id)'),
+                    'dominions.prestige' => DB::raw('dominions.prestige + dominion_tick.prestige'),
+                    'dominions.peasants' => DB::raw('dominions.peasants + dominion_tick.peasants'),
+                    'dominions.peasants_last_hour' => DB::raw('dominion_tick.peasants'),
+                    'dominions.morale' => DB::raw('dominions.morale + dominion_tick.morale'),
+                    'dominions.spy_strength' => DB::raw('dominions.spy_strength + dominion_tick.spy_strength'),
+                    'dominions.wizard_strength' => DB::raw('dominions.wizard_strength + dominion_tick.wizard_strength'),
+                    'dominions.resilience' => DB::raw('dominions.resilience + dominion_tick.resilience'),
+                    'dominions.fireball_meter' => DB::raw('dominions.fireball_meter + dominion_tick.fireball_meter'),
+                    'dominions.lightning_bolt_meter' => DB::raw('dominions.lightning_bolt_meter + dominion_tick.lightning_bolt_meter'),
+                    'dominions.resource_platinum' => DB::raw('dominions.resource_platinum + dominion_tick.resource_platinum'),
+                    'dominions.resource_food' => DB::raw('dominions.resource_food + dominion_tick.resource_food'),
+                    'dominions.resource_lumber' => DB::raw('dominions.resource_lumber + dominion_tick.resource_lumber'),
+                    'dominions.resource_mana' => DB::raw('dominions.resource_mana + dominion_tick.resource_mana'),
+                    'dominions.resource_ore' => DB::raw('dominions.resource_ore + dominion_tick.resource_ore'),
+                    'dominions.resource_gems' => DB::raw('dominions.resource_gems + dominion_tick.resource_gems'),
+                    'dominions.resource_tech' => DB::raw('dominions.resource_tech + dominion_tick.resource_tech'),
+                    'dominions.resource_boats' => DB::raw('dominions.resource_boats + dominion_tick.resource_boats'),
+                    'dominions.improvement_science' => DB::raw('dominions.improvement_science + dominion_tick.improvement_science'),
+                    'dominions.improvement_keep' => DB::raw('dominions.improvement_keep + dominion_tick.improvement_keep'),
+                    'dominions.improvement_forges' => DB::raw('dominions.improvement_forges + dominion_tick.improvement_forges'),
+                    'dominions.improvement_walls' => DB::raw('dominions.improvement_walls + dominion_tick.improvement_walls'),
+                    'dominions.military_draftees' => DB::raw('dominions.military_draftees + dominion_tick.military_draftees'),
+                    'dominions.military_unit1' => DB::raw('dominions.military_unit1 + dominion_tick.military_unit1'),
+                    'dominions.military_unit2' => DB::raw('dominions.military_unit2 + dominion_tick.military_unit2'),
+                    'dominions.military_unit3' => DB::raw('dominions.military_unit3 + dominion_tick.military_unit3'),
+                    'dominions.military_unit4' => DB::raw('dominions.military_unit4 + dominion_tick.military_unit4'),
+                    'dominions.military_spies' => DB::raw('dominions.military_spies + dominion_tick.military_spies'),
+                    'dominions.military_assassins' => DB::raw('dominions.military_assassins + dominion_tick.military_assassins'),
+                    'dominions.military_wizards' => DB::raw('dominions.military_wizards + dominion_tick.military_wizards'),
+                    'dominions.military_archmages' => DB::raw('dominions.military_archmages + dominion_tick.military_archmages'),
+                    'dominions.land_plain' => DB::raw('dominions.land_plain + dominion_tick.land_plain'),
+                    'dominions.land_mountain' => DB::raw('dominions.land_mountain + dominion_tick.land_mountain'),
+                    'dominions.land_swamp' => DB::raw('dominions.land_swamp + dominion_tick.land_swamp'),
+                    'dominions.land_cavern' => DB::raw('dominions.land_cavern + dominion_tick.land_cavern'),
+                    'dominions.land_forest' => DB::raw('dominions.land_forest + dominion_tick.land_forest'),
+                    'dominions.land_hill' => DB::raw('dominions.land_hill + dominion_tick.land_hill'),
+                    'dominions.land_water' => DB::raw('dominions.land_water + dominion_tick.land_water'),
+                    'dominions.discounted_land' => DB::raw('dominions.discounted_land + dominion_tick.discounted_land'),
+                    'dominions.building_home' => DB::raw('dominions.building_home + dominion_tick.building_home'),
+                    'dominions.building_alchemy' => DB::raw('dominions.building_alchemy + dominion_tick.building_alchemy'),
+                    'dominions.building_farm' => DB::raw('dominions.building_farm + dominion_tick.building_farm'),
+                    'dominions.building_smithy' => DB::raw('dominions.building_smithy + dominion_tick.building_smithy'),
+                    'dominions.building_masonry' => DB::raw('dominions.building_masonry + dominion_tick.building_masonry'),
+                    'dominions.building_ore_mine' => DB::raw('dominions.building_ore_mine + dominion_tick.building_ore_mine'),
+                    'dominions.building_gryphon_nest' => DB::raw('dominions.building_gryphon_nest + dominion_tick.building_gryphon_nest'),
+                    'dominions.building_tower' => DB::raw('dominions.building_tower + dominion_tick.building_tower'),
+                    'dominions.building_wizard_guild' => DB::raw('dominions.building_wizard_guild + dominion_tick.building_wizard_guild'),
+                    'dominions.building_temple' => DB::raw('dominions.building_temple + dominion_tick.building_temple'),
+                    'dominions.building_diamond_mine' => DB::raw('dominions.building_diamond_mine + dominion_tick.building_diamond_mine'),
+                    'dominions.building_school' => DB::raw('dominions.building_school + dominion_tick.building_school'),
+                    'dominions.building_lumberyard' => DB::raw('dominions.building_lumberyard + dominion_tick.building_lumberyard'),
+                    'dominions.building_forest_haven' => DB::raw('dominions.building_forest_haven + dominion_tick.building_forest_haven'),
+                    'dominions.building_factory' => DB::raw('dominions.building_factory + dominion_tick.building_factory'),
+                    'dominions.building_guard_tower' => DB::raw('dominions.building_guard_tower + dominion_tick.building_guard_tower'),
+                    'dominions.building_shrine' => DB::raw('dominions.building_shrine + dominion_tick.building_shrine'),
+                    'dominions.building_barracks' => DB::raw('dominions.building_barracks + dominion_tick.building_barracks'),
+                    'dominions.building_dock' => DB::raw('dominions.building_dock + dominion_tick.building_dock'),
+                    'dominions.stat_total_platinum_production' => DB::raw('dominions.stat_total_platinum_production + dominion_tick.resource_platinum'),
+                    'dominions.stat_total_food_production' => DB::raw('dominions.stat_total_food_production + dominion_tick.resource_food_production'),
+                    'dominions.stat_total_lumber_production' => DB::raw('dominions.stat_total_lumber_production + dominion_tick.resource_lumber_production'),
+                    'dominions.stat_total_mana_production' => DB::raw('dominions.stat_total_mana_production + dominion_tick.resource_mana_production'),
+                    'dominions.stat_total_ore_production' => DB::raw('dominions.stat_total_ore_production + dominion_tick.resource_ore'),
+                    'dominions.stat_total_gem_production' => DB::raw('dominions.stat_total_gem_production + dominion_tick.resource_gems'),
+                    'dominions.stat_total_tech_production' => DB::raw('dominions.stat_total_tech_production + dominion_tick.resource_tech'),
+                    'dominions.stat_total_boat_production' => DB::raw('dominions.stat_total_boat_production + dominion_tick.resource_boat_production'),
+                    'dominions.stat_total_food_decay' => DB::raw('dominions.stat_total_food_decay + dominion_tick.resource_food_decay'),
+                    'dominions.stat_total_lumber_decay' => DB::raw('dominions.stat_total_lumber_decay + dominion_tick.resource_lumber_decay'),
+                    'dominions.stat_total_mana_decay' => DB::raw('dominions.stat_total_mana_decay + dominion_tick.resource_mana_decay'),
+                    'dominions.highest_land_achieved' => DB::raw('dominions.highest_land_achieved + dominion_tick.highest_land_achieved'),
+                    'dominions.calculated_networth' => DB::raw('dominion_tick.calculated_networth'),
                     'dominions.last_tick_at' => $this->now,
                 ]);
 
             // Update spells
             DB::table('dominion_spells')
-                ->whereIn('dominion_id', function ($query) use ($where) {
-                    $query->select('id')->from('dominions')->where($where);
-                })
+                ->join('dominions', 'dominion_spells.dominion_id', '=', 'dominions.id')
+                ->where($where)
                 ->update([
                     'duration' => DB::raw('`duration` - 1'),
                     'dominion_spells.updated_at' => $this->now,
@@ -318,9 +318,8 @@ class TickService
 
             // Update queues
             DB::table('dominion_queue')
-                ->whereIn('dominion_id', function ($query) use ($where) {
-                    $query->select('id')->from('dominions')->where($where);
-                })
+                ->join('dominions', 'dominion_queue.dominion_id', '=', 'dominions.id')
+                ->where($where)
                 ->update([
                     'hours' => DB::raw('`hours` - 1'),
                     'dominion_queue.updated_at' => $this->now,
@@ -665,17 +664,13 @@ class TickService
             // toBase required to prevent ambiguous updated_at column in query
             $graveyardRealm = $round->realms()->where('number', 0)->first();
             if ($graveyardRealm !== null) {
-                $inactiveDominionIds = $round->dominions()
+                $inactiveDominions = $round->dominions()
                     ->join('users', 'dominions.user_id', '=', 'users.id')
                     ->where('realms.number', '>', 0)
                     ->where('dominions.protection_ticks_remaining', '>', 0)
                     ->where('dominions.created_at', '<', now()->subDays(3))
                     ->where('users.last_online', '<', now()->subDays(3))
-                    ->pluck('dominions.id');
-
-                DB::table('dominions')
-                    ->whereIn('id', $inactiveDominionIds)
-                    ->update([
+                    ->toBase()->update([
                         'realm_id' => $graveyardRealm->id,
                         'monarchy_vote_for_dominion_id' => null
                     ]);

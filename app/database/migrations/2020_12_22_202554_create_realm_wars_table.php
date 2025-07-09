@@ -45,12 +45,15 @@ class CreateRealmWarsTable extends Migration
             }
         }
 
-// SQLite no soporta múltiples dropColumn/dropForeign en una sola modificación
-        // Schema::table('realms', function (Blueprint $table) {
-        //     $table->dropForeign('realms_war_realm_id_foreign');
-        //     $table->dropColumn('war_realm_id');
-        //     $table->dropColumn('war_active_at');
-        // });
+        Schema::table('realms', function (Blueprint $table) {
+            
+        });
+        Schema::table('realms', function (Blueprint $table) {
+            $table->dropColumn('war_realm_id');
+        });
+        Schema::table('realms', function (Blueprint $table) {
+            $table->dropColumn('war_active_at');
+        });
     }
 
     /**

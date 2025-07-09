@@ -14,7 +14,7 @@ class RefactorDailyRankings extends Migration
     public function up()
     {
         Schema::table('daily_rankings', function (Blueprint $table) {
-            $table->string('key')->after('realm_name');
+            $table->string('key')->after('realm_name')->nullable();
             $table->integer('value')->after('key')->default(0);
             $table->unsignedInteger('rank')->after('value')->nullable();
             $table->unsignedInteger('previous_rank')->after('rank')->nullable();

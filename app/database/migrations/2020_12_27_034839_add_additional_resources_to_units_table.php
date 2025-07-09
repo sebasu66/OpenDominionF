@@ -14,9 +14,9 @@ class AddAdditionalResourcesToUnitsTable extends Migration
     public function up()
     {
         Schema::table('units', function (Blueprint $table) {
-            $table->integer('cost_mana')->after('cost_ore');
-            $table->integer('cost_lumber')->after('cost_mana');
-            $table->integer('cost_gems')->after('cost_lumber');
+            $table->integer('cost_mana')->after('cost_ore')->nullable();
+            $table->integer('cost_lumber')->after('cost_mana')->nullable();
+            $table->integer('cost_gems')->after('cost_lumber')->nullable();
         });
     }
 

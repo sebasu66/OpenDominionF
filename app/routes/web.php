@@ -8,13 +8,6 @@ $router->get('/')->uses('HomeController@getIndex')->name('home');
 $router->get('user-agreement')->uses('HomeController@getUserAgreement')->name('user-agreement');
 $router->get('about')->uses('HomeController@getAboutPage')->name('about');
 
-$router->get('lang/{locale}', static function ($locale) {
-    if (in_array($locale, ['en', 'es'])) {
-        session(['locale' => $locale]);
-    }
-    return redirect()->back();
-})->name('lang.switch');
-
 // Authentication
 
 $router->group(['prefix' => 'auth', 'as' => 'auth.'], static function (Router $router) {
@@ -80,12 +73,6 @@ $router->group(['middleware' => 'auth'], static function (Router $router) {
     $router->get('message-board/post/{post}/delete')->uses('MessageBoardController@getDeletePost')->name('message-board.delete.post');
     $router->post('message-board/post/{post}/delete')->uses('MessageBoardController@postDeletePost');
     $router->get('message-board/post/{post}/flag')->uses('MessageBoardController@getFlagPost')->name('message-board.flag.post');
-
-    // Narrative Chat
-    $router->get('narrative/chat')->uses('NarrativeController@getChat')->name('narrative.chat');
-    $router->get('narrative/messages')->uses('NarrativeController@getMessages')->name('narrative.messages');
-    $router->get('narrative/state')->uses('NarrativeController@getState')->name('narrative.state');
-    $router->post('narrative/message')->uses('NarrativeController@postMessage')->name('narrative.message');
     $router->get('message-board/{category}')->uses('MessageBoardController@getCategory')->name('message-board.category');
 
     $router->group(['prefix' => 'dominion', 'as' => 'dominion.'], static function (Router $router) {
@@ -346,6 +333,10 @@ $router->group(['prefix' => 'valhalla', 'as' => 'valhalla.'], static function (R
     $router->get('user/{user}')->uses('ValhallaController@getUser')->name('user');
 
 });
+
+// Language Switcher
+
+$router->get('lang/{locale}')->uses('LanguageController@switch')->name('lang.switch');
 
 // Staff
 

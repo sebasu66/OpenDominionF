@@ -44,7 +44,12 @@ for (const dir in vendorDirs) {
 mix.copy('app/resources/images', 'public/assets/app/images');
 
 mix.js('app/resources/js/app.js', 'public/assets/app/js')
-    .sass('app/resources/sass/app.scss', 'public/assets/app/css');
+    .sass('app/resources/sass/app.scss', 'public/assets/app/css', {
+        sassOptions: {
+            fiber: false, // Disable Fiber if not using it, or if it causes issues
+            implementation: require('sass'),
+        }
+    });
 
 mix.copy('app/resources/css', 'public/assets/app/css');
 

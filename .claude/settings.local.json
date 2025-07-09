@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(php:*)",
+      "Bash(bash:*)",
+      "Bash(ls:*)",
+      "Bash(./build.sh)",
+      "Bash(curl:*)",
+      "Bash(rm:*)",
+      "Bash(unzip:*)",
+      "Bash(python3:*)"
+    ],
+    "deny": []
+  }
+}

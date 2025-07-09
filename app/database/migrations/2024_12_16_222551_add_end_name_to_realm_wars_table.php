@@ -13,11 +13,8 @@ class AddEndNameToRealmWarsTable extends Migration
      */
     public function up()
     {
-        // SQLite: solo se permite un drop/rename por transacción, así que separamos las operaciones
         Schema::table('realm_wars', function (Blueprint $table) {
             $table->string('source_realm_name_end')->nullable()->after('source_realm_name');
-        });
-        Schema::table('realm_wars', function (Blueprint $table) {
             $table->string('target_realm_name_end')->nullable()->after('target_realm_name');
         });
         Schema::table('realm_wars', function (Blueprint $table) {
@@ -35,7 +32,6 @@ class AddEndNameToRealmWarsTable extends Migration
      */
     public function down()
     {
-        // SQLite: solo se permite un drop/rename por transacción, así que separamos las operaciones
         Schema::table('realm_wars', function (Blueprint $table) {
             $table->renameColumn('source_realm_name_start', 'source_realm_name');
         });

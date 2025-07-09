@@ -1,0 +1,19 @@
+- [x] Read the `README.md` file.
+- [x] Check `package.json` and `composer.json` if needed.
+- [x] Look for a `start.sh` script if needed.
+- [x] Ask for more information if I can't find the instructions.
+- [x] Uninstall current PHP version (requires administrator privileges).
+- [x] Install PHP 7.4 (requires administrator privileges).
+- [x] Verify PHP version.
+- [x] Confirmed: Database changed to SQLite, `database.sqlite` exists in `database/` folder.
+- [x] Confirmed: Narrative UI code exists in `src/` (controllers, services, NPC advisors), but routes for `/narrative/chat` are missing.
+- [x] Install Composer Dependencies: Run `composer install`.
+- [x] Create `.env` file: Copy `.env.example` to `.env` and configure it.
+- [x] Generate Application Key: Run `php artisan key:generate`.
+- [x] Update APP_URL to localhost in .env file.
+- [x] Run Database Migrations: Run `php artisan migrate`.
+- [x] Seed Database (Optional but Recommended): Run `php artisan db:seed`.
+- [x] Install Node.js Dependencies: Run `npm ci`.
+- [ ] Compile Frontend Assets: Run `npm run dev`.
+- [ ] Start the Laravel Development Server: User will run `php artisan serve` manually.
+- [x] Define `lang.switch` route and create `LanguageController` to fix "Route [lang.switch] not defined" error.

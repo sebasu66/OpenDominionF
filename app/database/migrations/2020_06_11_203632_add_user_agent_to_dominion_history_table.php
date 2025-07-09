@@ -14,8 +14,8 @@ class AddUserAgentToDominionHistoryTable extends Migration
     public function up()
     {
         Schema::table('dominion_history', function (Blueprint $table) {
-            $table->string('ip')->after('delta');
-            $table->string('device')->after('ip');
+            $table->string('ip')->after('delta')->nullable();
+            $table->string('device')->after('ip')->nullable();
         });
     }
 
